@@ -69,21 +69,13 @@
 
 * `XML相关内容`
 
-利用domdocument来操作xml,链接数据库完成一个在线词典,利用xpath来查询数据库提高速度.换了一个环境遇到很多编码问题,因为xml的严谨性所以编码一旦出问题就会显示不了.比如new一个DOMDocument对象的时候要记得传参('1.0','utf8'),php要有header('content-type:text/html;charset=utf8');
-还尝试了一下使用dom来操作html;对了,还有simpxml对象,可以使操作dom变得简单很多.关键对象:
-<pre>
-$simplexml=new simpleXMLElement();
-$dom=new DOMDocument('1.0','uf8');
-$xpath=new DOMXPATH();
-</pre>
-因为我是学了js&ajax再来看这个,所以其中的函数跟js中的一样.
-<pre>
-$dom->createElement();
-$dom->createTextNode();
-$dom->createCDATASection();//这个不知道有没有
+2016/5/7
 
-document.createElement();  //感觉dom很大部分就是省去了js中的document
-</pre>
+* 因为HTTP协议太迷,所以还是学习完ajax
+
+* 在博客中引入数据库,搭建商城(或者说把做好的商城放上去)
+
+* 在网站中加入ajax技术
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
@@ -150,22 +142,13 @@ document.createElement();  //感觉dom很大部分就是省去了js中的documen
 <li><code>XML相关内容</code></li>
 </ul>
 
-<p>利用domdocument来操作xml,链接数据库完成一个在线词典,利用xpath来查询数据库提高速度.换了一个环境遇到很多编码问题,因为xml的严谨性所以编码一旦出问题就会显示不了.比如new一个DOMDocument对象的时候要记得传参('1.0','utf8'),php要有header('content-type:text/html;charset=utf8');
-还尝试了一下使用dom来操作html;对了,还有simpxml对象,可以使操作dom变得简单很多.关键对象:</p>
+<p>2016/5/7</p>
 
-<pre>$simplexml=new simpleXMLElement();
-$dom=new DOMDocument('1.0','uf8');
-$xpath=new DOMXPATH();
-</pre>
-
-<p>因为我是学了js&amp;ajax再来看这个,所以其中的函数跟js中的一样.</p>
-
-<pre>$dom-&gt;createElement();
-$dom-&gt;createTextNode();
-$dom-&gt;createCDATASection();//这个不知道有没有
-
-document.createElement();  //感觉dom很大部分就是省去了js中的document
-</pre>
+<ul>
+<li><p>因为HTTP协议太迷,所以还是学习完ajax</p></li>
+<li><p>在博客中引入数据库,搭建商城(或者说把做好的商城放上去)</p></li>
+<li><p>在网站中加入ajax技术</p></li>
+</ul>
 <!-- content end -->
 </div>
 <br>
