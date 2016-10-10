@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
++ 预约码&优惠券逻辑
+
+  根据预约码来发送优惠券,以下根目录./为apps/wechat/;
+ 
+ 
+    +  导入优惠券时会有coupon_ids字段,用来记录优惠券种类.
+    +  用户输入预约码./company/validate
+
+      当前页面加载validate.js,用来判断验证码.当验证码正确时
+
+            window.location.href = appPath 
+            + 'company/confirm?company='+company_id+'&vcode='+$('#id_num').val();
+
+      跳转至./company/confirm
+
+    +  在confirm里首先判断预约码是否正确,之后读取预约码的coupon_ids字段
+
+    		if(!empty($import_data['coupon_ids'])){
+            $this->companybussiness->handle(
+                $import_data['company_id'],
+                'issuing_company_coupon',
+                array(
+                    'coupon_id' => $import_data['coupon_ids'],
+                    'user_id' => $user_info['id'],
+					'nick_name' => $user_info['username']
+                )
+             );
+            }
+handle(公司id,调用函数,传递参数),在handle中,根据说传递的公司id不同加载不同的php文件来执行不同公司的优惠券逻辑
+
+            $c_bussiness_file = APPPATH . "libraries/company/Company_" . $c_id . ".php";
+     
+
+      之后根据不同公司的不同逻辑发送到各个user_id上~需要注意的地方就是各种引用类文件,类似工厂模式.
+
++ 预约码验证
+
+  上面判断预约码是否正确的逻辑.分别有12位跟8位的
+  + 获取预约码在数据库中的数据,可能出现不存在,已失效等状态
+  + 预约码已被他人使用.
+   
+     预约码被使用时,会更新预约码的user_id信息,一旦当前用户id与这个id不匹配,则判断为被他人使用.重点是,预约码是如何跟整个账户体系所联系的.
+
++  账户体系
+  
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<ul>
+<li><p>预约码&amp;优惠券逻辑</p>
+
+<p>根据预约码来发送优惠券,以下根目录./为apps/wechat/;</p>
+
+<ul><li>导入优惠券时会有coupon_ids字段,用来记录优惠券种类.</li>
+<li><p>用户输入预约码./company/validate</p>
+
+<p>当前页面加载validate.js,用来判断验证码.当验证码正确时</p>
+
+<pre><code>window.location.href = appPath 
++ 'company/confirm?company='+company_id+'&amp;vcode='+$('#id_num').val();
+</code></pre>
+
+<p>跳转至./company/confirm</p></li>
+<li><p>在confirm里首先判断预约码是否正确,之后读取预约码的coupon_ids字段</p>
+
+<pre><code>if(!empty($import_data['coupon_ids'])){
+$this-&gt;companybussiness-&gt;handle(
+    $import_data['company_id'],
+    'issuing_company_coupon',
+    array(
+        'coupon_id' =&gt; $import_data['coupon_ids'],
+        'user_id' =&gt; $user_info['id'],
+        'nick_name' =&gt; $user_info['username']
+    )
+ );
+}
+</code></pre>
+
+<p>handle(公司id,调用函数,传递参数),在handle中,根据说传递的公司id不同加载不同的php文件来执行不同公司的优惠券逻辑</p>
+
+<pre><code>$c_bussiness_file = APPPATH . "libraries/company/Company_" . $c_id . ".php";
+</code></pre>
+
+<p>之后根据不同公司的不同逻辑发送到各个user_id上~需要注意的地方就是各种引用类文件,类似工厂模式.</p></li></ul></li>
+<li><p>预约码验证</p>
+
+<p>上面判断预约码是否正确的逻辑.分别有12位跟8位的</p>
+
+<ul><li>获取预约码在数据库中的数据,可能出现不存在,已失效等状态</li>
+<li><p>预约码已被他人使用.</p>
+
+<p>预约码被使用时,会更新预约码的user_id信息,一旦当前用户id与这个id不匹配,则判断为被他人使用.重点是,预约码是如何跟整个账户体系所联系的.</p></li></ul></li>
+<li><p>账户体系</p></li>
+</ul>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "daishu_1.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
